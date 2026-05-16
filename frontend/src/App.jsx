@@ -99,8 +99,12 @@ export default function App() {
           invoice.id === id
             ? {
                 ...invoice,
-                activity: [...invoice.activity, "Reminder email sent"],
-                lastReminder: "Just now",
+                activity: [
+                  ...invoice.activity,
+                  `Reminder email sent on ${new Date().toLocaleString()}`
+                ],
+                
+                lastReminder: new Date().toLocaleString(),
               }
             : invoice
         )
@@ -161,15 +165,14 @@ export default function App() {
     .reduce((acc, invoice) => acc + Number(invoice.amount), 0);
 
   const recentActivities = updatedInvoices
-    .flatMap((invoice) =>
-      invoice.activity.map((item) => ({
-        text: item,
-        customer: invoice.customer,
-        invoiceId: invoice.invoiceId,
-      }))
-    )
-    .slice(-3)
-    .reverse();
+  .filter((invoice) => invoice.lastReminder && invoice.lastReminder !== "—")
+  .map((invoice) => ({
+    text: `Reminder sent on ${invoice.lastReminder}`,
+    customer: invoice.customer,
+    invoiceId: invoice.invoiceId,
+  }))
+  .slice(-3)
+  .reverse();
 
   const upcomingDue = updatedInvoices
     .filter((invoice) => invoice.status !== "Paid")
@@ -524,7 +527,7 @@ export default function App() {
                     <div>
                       <p className="font-medium">{invoice.customer}</p>
                       <p className="text-sm text-slate-500">
-                        {invoice.invoiceId}
+                        {invoice.invoiceId || `INV-${invoice.id}`}
                       </p>
                     </div>
                     <div className="text-right">
