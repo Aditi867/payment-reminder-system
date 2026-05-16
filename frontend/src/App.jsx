@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+import {
   LayoutDashboard,
   FileText,
   Send,
@@ -140,6 +147,10 @@ export default function App() {
     (invoice) => invoice.status === "Overdue"
   ).length;
 
+  const pendingInvoices = updatedInvoices.filter(
+    (invoice) => invoice.status === "Pending"
+  ).length;
+
   const totalAmount = invoices.reduce(
     (acc, invoice) => acc + Number(invoice.amount),
     0
@@ -170,9 +181,16 @@ export default function App() {
     return "bg-yellow-100 text-yellow-700";
   };
 
+  const chartData = [
+    { name: "Paid", value: paidInvoices },
+    { name: "Pending", value: pendingInvoices },
+    { name: "Overdue", value: overdueInvoices },
+  ];
+
+  const chartColors = ["#22c55e", "#eab308", "#ef4444"];
+
   return (
     <div className="min-h-screen bg-slate-100 flex">
-      {/* SIDEBAR */}
       <aside className="hidden lg:flex w-64 bg-[#06245c] text-white flex-col justify-between p-6">
         <div>
           <div className="flex items-center gap-3 mb-10">
@@ -221,7 +239,6 @@ export default function App() {
         <p className="text-xs text-blue-100">© 2026 PayRemind</p>
       </aside>
 
-      {/* MAIN */}
       <main className="flex-1 p-5 lg:p-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div>
@@ -230,7 +247,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* CREATE FORM */}
         <form
           onSubmit={handleSubmit}
           className="bg-white p-5 rounded-2xl shadow-sm border mb-6"
@@ -281,14 +297,13 @@ export default function App() {
               required
             />
 
-            <button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl flex items-center justify-center gap-2">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl flex items-center justify-center gap-2 py-3">
               <Plus size={18} />
               New Invoice
             </button>
           </div>
         </form>
 
-        {/* DASHBOARD CARDS */}
         <div className="grid md:grid-cols-2 xl:grid-cols-5 gap-4 mb-6">
           <StatCard
             title="Total Invoices"
@@ -322,7 +337,33 @@ export default function App() {
           />
         </div>
 
-        {/* SEARCH + FILTER */}
+        <div className="bg-white p-5 rounded-2xl shadow-sm border mb-6">
+          <h2 className="font-bold mb-4">Paid vs Pending vs Overdue</h2>
+
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={90}
+                  dataKey="value"
+                  label
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={chartColors[index]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
         <div className="bg-white p-4 rounded-2xl shadow-sm border mb-6 flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
             <Search
@@ -361,7 +402,6 @@ export default function App() {
           </button>
         </div>
 
-        {/* TABLE */}
         <div className="bg-white rounded-2xl shadow-sm border overflow-hidden mb-6">
           <h2 className="font-bold p-5">Recent Invoices</h2>
 
@@ -444,7 +484,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* BOTTOM SECTIONS */}
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-white p-5 rounded-2xl shadow-sm border">
             <h2 className="font-bold mb-4">Recent Activities</h2>
@@ -514,7 +553,9 @@ function StatCard({ title, value, icon, color }) {
   };
 
   return (
-    <div className={`bg-white p-5 rounded-2xl shadow-sm border ${colors[color]}`}>
+    <div
+      className={`bg-white p-5 rounded-2xl shadow-sm border ${colors[color]}`}
+    >
       <div className="flex justify-between items-center">
         <div>
           <p className="text-sm font-medium">{title}</p>
