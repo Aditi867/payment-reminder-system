@@ -49,7 +49,7 @@ export default function App() {
 
     const newInvoice = {
       id: Date.now(),
-      invoiceId: `INV-${Date.now().toString().slice(-4)}`,
+      invoiceId: `INV-${Math.floor(1000 + Math.random() * 9000)}`,
       ...formData,
       activity: ["Invoice created"],
       lastReminder: "—",
@@ -347,7 +347,7 @@ export default function App() {
                   data={chartData}
                   cx="50%"
                   cy="50%"
-                  outerRadius={90}
+                  outerRadius={70}
                   dataKey="value"
                   label
                 >
