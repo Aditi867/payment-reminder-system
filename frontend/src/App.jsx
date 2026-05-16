@@ -343,7 +343,7 @@ export default function App() {
         <div className="bg-white p-5 rounded-2xl shadow-sm border mb-6">
           <h2 className="font-bold mb-4">Paid vs Pending vs Overdue</h2>
 
-          <div className="h-64">
+          <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -556,15 +556,15 @@ export default function App() {
 
 function StatCard({ title, value, icon, color }) {
   const colors = {
-    blue: "bg-blue-100 text-blue-600 border-blue-200",
-    green: "bg-green-100 text-green-600 border-green-200",
-    yellow: "bg-yellow-100 text-yellow-600 border-yellow-200",
-    red: "bg-red-100 text-red-600 border-red-200",
+  blue: "bg-blue-50 text-blue-600 border-blue-200",
+  green: "bg-green-50 text-green-600 border-green-200",
+  yellow: "bg-yellow-100 text-yellow-700 border-yellow-200",
+  red: "bg-red-50 text-red-600 border-red-200",
   };
-
+  
   return (
     <div
-      className={`bg-white p-5 rounded-2xl shadow-sm border ${colors[color]}`}
+    className={`p-5 rounded-2xl shadow-sm border ${colors[color]}`}  
     >
       <div className="flex justify-between items-center">
         <div>
