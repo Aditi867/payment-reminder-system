@@ -472,7 +472,14 @@ export default function App() {
                         </button>
 
                         <button
-                          onClick={() => deleteInvoice(invoice.id)}
+                          onClick={() => {
+                            const confirmDelete = window.confirm(
+                              "Are you sure you want to delete this invoice?"
+                            );
+                            if (confirmDelete) {
+                              deleteInvoice(invoice.id);
+                            }
+                          }}
                           className="border p-2 rounded-lg hover:bg-red-50 text-red-500"
                           title="Delete"
                         >
