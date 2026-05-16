@@ -408,7 +408,7 @@ export default function App() {
         <div className="bg-white rounded-2xl shadow-sm border overflow-hidden mb-6">
           <h2 className="font-bold p-5">Recent Invoices</h2>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto max-h-[450px] overflow-y-auto">
             <table className="w-full text-sm">
               <thead className="bg-slate-50 text-slate-500">
                 <tr>
