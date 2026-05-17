@@ -155,4 +155,3 @@ Core functionality such as invoice management, reminder emails, dashboard analyt
 
 The sidebar items are currently non-navigational placeholders intended for future expansion.
 
-Email reminders work locally with valid Gmail App Password credentials. On free hosting providers, SMTP may be restricted or delayed depending on provider network limits.
