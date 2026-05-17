@@ -87,12 +87,15 @@ export default function App() {
   const sendReminder = async (id) => {
     const invoice = invoices.find((item) => item.id === id);
 
-    try {
-      await axios.post("http://localhost:5000/send-reminder", {
-        customer: invoice.customer,
-        email: invoice.email,
-        amount: invoice.amount,
-      });
+   try {
+    await axios.post(
+      "https://payment-reminder-backend-r89s.onrender.com/send-reminder",
+    {
+      customer: invoice.customer,
+      email: invoice.email,
+      amount: invoice.amount,
+    }
+  );
 
       setInvoices(
         invoices.map((invoice) =>
