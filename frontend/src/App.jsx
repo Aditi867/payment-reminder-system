@@ -89,7 +89,7 @@ export default function App() {
 
    try {
     await axios.post(
-      "https://payment-reminder-backend-r89s.onrender.com/send-reminder",
+      "http://localhost:5000/send-reminder",
     {
       customer: invoice.customer,
       email: invoice.email,
