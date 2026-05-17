@@ -154,3 +154,5 @@ The sidebar navigation is currently implemented as part of the dashboard UI layo
 Core functionality such as invoice management, reminder emails, dashboard analytics, search/filtering, and payment status tracking is fully functional.
 
 The sidebar items are currently non-navigational placeholders intended for future expansion.
+
+Email reminders work locally with valid Gmail App Password credentials. On free hosting providers, SMTP may be restricted or delayed depending on provider network limits.
